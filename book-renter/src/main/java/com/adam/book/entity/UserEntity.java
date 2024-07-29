@@ -1,6 +1,5 @@
-package com.adam.book.user;
+package com.adam.book.entity;
 
-import com.adam.book.role.RoleEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.management.relation.Role;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Collection;

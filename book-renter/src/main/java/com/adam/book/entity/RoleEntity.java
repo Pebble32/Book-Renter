@@ -1,6 +1,5 @@
-package com.adam.book.role;
+package com.adam.book.entity;
 
-import com.adam.book.user.UserEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
