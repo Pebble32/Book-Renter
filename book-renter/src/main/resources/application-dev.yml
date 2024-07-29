@@ -1,9 +1,28 @@
 spring:
   datasource:
-    url: jdbc:posgresql://localhost:5432/book_db
+    url: jdbc:postgresql://postgres-sql-book:5432/book_db
     username: username
     password: mysecretpassword
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  mail:
+    host: mail-dev-book
+    port: 1025
+    username: adam
+    password: mysecretpassword
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enable: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000

@@ -5,13 +5,51 @@ services:
     environment:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: mysecretpassword
-      PGDATA: /var/lib/postgresqlp/data
+      PGDATA: /var/lib/postgresql/data
       POSTGRES_DB: book_db
     volumes:
-      - postgres:/data/postgres
+      - postgres:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - 5432:5432
-    
+      - "5432:5432"
+    networks:
+      - spring-demo
+    restart: unless-stopped
+
+  mail-dev:
+    container_name: mail-dev-book
+    image: maildev/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - spring-demo
+
+  spring-boot-app:
+    container_name: book-renter-app
+    build:
+      context: ./book-renter
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-sql-book:5432/book_db
+      SPRING_DATASOURCE_USERNAME: username
+      SPRING_DATASOURCE_PASSWORD: mysecretpassword
+      SPRING_MAIL_HOST: mail-dev-book
+      SPRING_MAIL_PORT: 1025
+      SPRING_MAIL_USERNAME: adam
+      SPRING_MAIL_PASSWORD: mysecretpassword
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - mail-dev
+    networks:
+      - spring-demo
+    restart: unless-stopped
+
+networks:
+  spring-demo:
+    driver: bridge
 
 volumes:
   postgres:
