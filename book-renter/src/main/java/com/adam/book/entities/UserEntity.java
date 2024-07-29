@@ -1,4 +1,4 @@
-package com.adam.book.entity;
+package com.adam.book.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
