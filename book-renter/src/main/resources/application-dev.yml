@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:posgresql://localhost:5432/book_db
+    username: username
+    password: mysecretpassword
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
