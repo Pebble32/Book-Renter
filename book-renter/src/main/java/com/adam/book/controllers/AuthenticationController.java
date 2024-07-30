@@ -3,6 +3,7 @@ package com.adam.book.controllers;
 import com.adam.book.services.AuthenticationService;
 import com.adam.book.controllers.dtos.RegistrationRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class AuthenticationController {
     @ResponseStatus(ACCEPTED)
     public ResponseEntity<?> register(
             @RequestBody @Valid RegistrationRequest request
-    ) {
+    ) throws MessagingException {
         authenticationService.register(request);
         return ResponseEntity.accepted().build();
     }
