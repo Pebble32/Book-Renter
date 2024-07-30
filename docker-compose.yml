@@ -38,6 +38,7 @@ services:
       SPRING_MAIL_PORT: 1025
       SPRING_MAIL_USERNAME: adam
       SPRING_MAIL_PASSWORD: mysecretpassword
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update # This line ensures your tables are created automatically
     ports:
       - "8080:8080"
     depends_on:
