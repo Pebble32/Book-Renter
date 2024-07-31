@@ -30,7 +30,7 @@ public class JwtService {
         return generateJwtToken(new HashMap<>(), userDetails);
     }
 
-    private String generateJwtToken(Map<String, Object> claims, UserDetails userDetails) {
+    public String generateJwtToken(Map<String, Object> claims, UserDetails userDetails) {
         return buildToken(claims, userDetails, jwtExpiration);
     }
 

@@ -1,6 +1,7 @@
 package com.adam.book.controllers;
 
 import com.adam.book.controllers.dtos.AuthenticationRequest;
+import com.adam.book.controllers.dtos.AuthenticationResponse;
 import com.adam.book.services.AuthenticationService;
 import com.adam.book.controllers.dtos.RegistrationRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,11 +31,17 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationRequest> authenticate(
+    public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody @Valid AuthenticationRequest authenticationRequest
     ) {
-        return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest))
+        return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest));
     }
 
+    @GetMapping("/activate-account")
+    public void confirm(
+            @RequestParam String token
+    ) throws MessagingException {
+        authenticationService.activateAccount(token);
+    }
 
 }
