@@ -40,10 +40,11 @@ public class EmailService {
         if (emailTemplate == null) {
             templateName = "confirm-email";
         } else {
-            templateName = emailTemplate.name();
+            templateName = emailTemplate.getName();
         }
+
         MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(
+        MimeMessageHelper helper = new MimeMessageHelper(
                 mimeMessage,
                 MULTIPART_MODE_MIXED,
                 UTF_8.name()
@@ -51,21 +52,20 @@ public class EmailService {
         Map<String, Object> properties = new HashMap<>();
         properties.put("username", username);
         properties.put("confirmationUrl", confirmationUrl);
-        properties.put("activationCode", activationCode);
+        properties.put("activation_code", activationCode);
 
         Context context = new Context();
         context.setVariables(properties);
 
-        mimeMessageHelper.setFrom("contact@adam.com");
-        mimeMessageHelper.setTo(to);
-        mimeMessageHelper.setSubject(subject);
+        helper.setFrom("contact@aliboucoding.com");
+        helper.setTo(to);
+        helper.setSubject(subject);
 
         String template = templateEngine.process(templateName, context);
 
-        mimeMessageHelper.setText(template, true);
+        helper.setText(template, true);
 
         mailSender.send(mimeMessage);
-
     }
 }
 
