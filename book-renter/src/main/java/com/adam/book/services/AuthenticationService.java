@@ -51,15 +51,14 @@ public class AuthenticationService {
 
         var newToken = generateAndSaveActivationToken(user);
 
-        // todo send email
 
         emailService.sendEmail(
                 user.getEmail(),
-                "Activation Code",
                 user.getFullName(),
                 EmailTemplateName.ACTIVATE_ACCOUNT,
                 activationUrl,
-                newToken
+                newToken,
+                "Account activation"
         );
     }
 

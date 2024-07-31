@@ -4,6 +4,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -19,6 +20,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE_MIXED;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class EmailService {
 
@@ -28,17 +30,17 @@ public class EmailService {
     @Async
     public void sendEmail(
             String to,
-            String subject,
             String username,
-            EmailTemplateName emailTemplateName,
+            EmailTemplateName emailTemplate,
             String confirmationUrl,
-            String activationCode
+            String activationCode,
+            String subject
     ) throws MessagingException {
         String templateName;
-        if (emailTemplateName == null) {
+        if (emailTemplate == null) {
             templateName = "confirm-email";
         } else {
-            templateName = emailTemplateName.name();
+            templateName = emailTemplate.name();
         }
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(
