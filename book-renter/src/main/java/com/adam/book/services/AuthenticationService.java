@@ -44,10 +44,13 @@ public class AuthenticationService {
                 .build();
         userRepository.save(user);
         sendValidationEmail(user);
+
     }
 
     private void sendValidationEmail(UserEntity user) throws MessagingException {
+
         var newToken = generateAndSaveActivationToken(user);
+
         // todo send email
 
         emailService.sendEmail(
@@ -61,11 +64,14 @@ public class AuthenticationService {
     }
 
     private String generateAndSaveActivationToken(UserEntity user) {
+
         String generatedToken = generateActivationCode();
+
         var token = TokenEntity.builder()
                 .token(generatedToken)
                 .createdAt(LocalDateTime.now())
                 .expiresAt(LocalDateTime.now().plusMinutes(15))
+                .user(user)
                 .build();
         tokenRepository.save(token);
 

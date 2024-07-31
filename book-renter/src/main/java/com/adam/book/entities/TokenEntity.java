@@ -16,6 +16,7 @@ public class TokenEntity {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(unique=true)
     private String token;
     private LocalDateTime createdAt;
     private LocalDateTime expiresAt;
