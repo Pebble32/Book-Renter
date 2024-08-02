@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.adam.book.controllers.dtos.BookSpecification.withOwnerId;
+
 @Service
 @AllArgsConstructor
 public class BookService {
@@ -42,6 +44,24 @@ public class BookService {
         UserEntity userEntity = ((UserEntity) connectedUser.getPrincipal());
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
         Page<BookEntity> bookEntities = bookRepository.findAllDisplayableBooks(pageable, userEntity.getId());
+        List<BookResponse> bookResponses = bookEntities.stream()
+                .map(bookConverter::toBookResponse)
+                .toList();
+        return new PageResponse<>(
+                bookResponses,
+                bookEntities.getNumber(),
+                bookEntities.getSize(),
+                bookEntities.getTotalElements(),
+                bookEntities.getTotalPages(),
+                bookEntities.isFirst(),
+                bookEntities.isLast()
+        );
+    }
+
+    public PageResponse<BookResponse> findAllBooksByOwner(int page, int size, Authentication connectedUser) {
+        UserEntity userEntity = ((UserEntity) connectedUser.getPrincipal());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Page<BookEntity> bookEntities = bookRepository.findAll(withOwnerId(userEntity.getId()), pageable);
         List<BookResponse> bookResponses = bookEntities.stream()
                 .map(bookConverter::toBookResponse)
                 .toList();
