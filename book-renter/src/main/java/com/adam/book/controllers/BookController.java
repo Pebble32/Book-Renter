@@ -2,6 +2,7 @@ package com.adam.book.controllers;
 
 import com.adam.book.controllers.dtos.BookRequest;
 import com.adam.book.controllers.dtos.BookResponse;
+import com.adam.book.repositories.entities.common.PageResponse;
 import com.adam.book.services.BookService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

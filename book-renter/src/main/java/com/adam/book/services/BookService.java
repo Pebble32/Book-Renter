@@ -9,8 +9,14 @@ import com.adam.book.repositories.entities.common.PageResponse;
 import com.adam.book.services.converters.BookConverter;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -33,6 +39,20 @@ public class BookService {
     }
 
     public PageResponse<BookResponse> findAllBooks(int page, int size, Authentication connectedUser) {
-        return null;
+        UserEntity userEntity = ((UserEntity) connectedUser.getPrincipal());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Page<BookEntity> bookEntities = bookRepository.findAllDisplayableBooks(pageable, userEntity.getId());
+        List<BookResponse> bookResponses = bookEntities.stream()
+                .map(bookConverter::toBookResponse)
+                .toList();
+        return new PageResponse<>(
+                bookResponses,
+                bookEntities.getNumber(),
+                bookEntities.getSize(),
+                bookEntities.getTotalElements(),
+                bookEntities.getTotalPages(),
+                bookEntities.isFirst(),
+                bookEntities.isLast()
+        );
     }
 }
