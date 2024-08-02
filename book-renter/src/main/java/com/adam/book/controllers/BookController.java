@@ -72,7 +72,7 @@ public class BookController {
 
     @PatchMapping("/shareable/{book-id}")
     public ResponseEntity<Long> updateShareableStatus(
-            @PathVariable("book-id") long bookId,
+            @PathVariable("book-id") Long bookId,
             Authentication connectedUser
     ) {
         return ResponseEntity.ok(bookService.updateShareableStatus(bookId,connectedUser));
@@ -80,9 +80,25 @@ public class BookController {
 
     @PatchMapping("/archived/{book-id}")
     public ResponseEntity<Long> updateArchivedStatus(
-            @PathVariable("book-d") long bookId,
+            @PathVariable("book-d") Long bookId,
             Authentication connectedUser
     ) {
         return ResponseEntity.ok(bookService.updateArchivedStatus(bookId,connectedUser));
+    }
+
+    @PostMapping("/borrow/book-id")
+    public ResponseEntity<Long> borrowBook(
+            @PathVariable("book-id") Long bookId,
+            Authentication connectedUser
+    ) {
+        return ResponseEntity.ok(bookService.borrowBook(bookId, connectedUser));
+    }
+
+    @PatchMapping("/borrow/return/{book-id}")
+    public ResponseEntity<Long> returnBorrowedBook(
+            @PathVariable("book-id") Long bookId,
+            Authentication connectedUser
+    ) {
+        return ResponseEntity.ok(bookService.returnBorrowedBook(bookId, connectedUser));
     }
 }
