@@ -37,7 +37,19 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
           FROM BookTransactionHistoryEntity history
           WHERE history.user.id = :userId
           AND history.book.id = :bookId
+          AND history.returned = false
           AND history.returnApproved = false
           """)
-    Optional<BookTransactionHistoryEntity> findByBookIdAndUserId(Long bookId, Long id);
+    Optional<BookTransactionHistoryEntity> findByBookIdAndUserId(Long bookId, Long userId);
+
+
+    @Query("""
+          SELECT history
+          FROM BookTransactionHistoryEntity history
+          WHERE history.book.owner.id = :userId
+          AND history.book.id = :bookId
+          AND history.returned = true
+          AND history.returnApproved = false
+          """)
+    Optional<BookTransactionHistoryEntity> findByBookIdAndOwnerId(Long bookId, Long userId);
 }
