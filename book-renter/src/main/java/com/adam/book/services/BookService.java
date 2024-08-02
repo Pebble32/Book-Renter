@@ -2,8 +2,11 @@ package com.adam.book.services;
 
 import com.adam.book.controllers.dtos.BookRequest;
 import com.adam.book.controllers.dtos.BookResponse;
+import com.adam.book.controllers.dtos.BorrowedBookResponse;
 import com.adam.book.repositories.BookRepository;
+import com.adam.book.repositories.BookTransactionHistoryRepository;
 import com.adam.book.repositories.entities.BookEntity;
+import com.adam.book.repositories.entities.BookTransactionHistoryEntity;
 import com.adam.book.repositories.entities.UserEntity;
 import com.adam.book.repositories.entities.common.PageResponse;
 import com.adam.book.services.converters.BookConverter;
@@ -26,6 +29,7 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final BookConverter bookConverter;
+    private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
 
     public Long save(BookRequest bookRequest, Authentication connectedUser) {
         UserEntity userEntity = ((UserEntity) connectedUser.getPrincipal());
@@ -73,6 +77,24 @@ public class BookService {
                 bookEntities.getTotalPages(),
                 bookEntities.isFirst(),
                 bookEntities.isLast()
+        );
+    }
+
+    public PageResponse<BorrowedBookResponse> findAllBorrowedBooks(int page, int size, Authentication connectedUser) {
+        UserEntity userEntity = ((UserEntity) connectedUser.getPrincipal());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
+        Page<BookTransactionHistoryEntity> allBorrowedBooks = bookTransactionHistoryRepository.findAllBorrowedBooks(pageable, userEntity.getId());
+        List<BorrowedBookResponse> bookResponses = allBorrowedBooks.stream()
+                .map(bookConverter::toBorrowedBookResponse)
+                .toList();
+        return new PageResponse<>(
+                bookResponses,
+                allBorrowedBooks.getNumber(),
+                allBorrowedBooks.getSize(),
+                allBorrowedBooks.getTotalElements(),
+                allBorrowedBooks.getTotalPages(),
+                allBorrowedBooks.isFirst(),
+                allBorrowedBooks.isLast()
         );
     }
 }

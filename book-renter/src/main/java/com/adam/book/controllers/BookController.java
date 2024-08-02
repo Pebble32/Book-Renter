@@ -2,6 +2,7 @@ package com.adam.book.controllers;
 
 import com.adam.book.controllers.dtos.BookRequest;
 import com.adam.book.controllers.dtos.BookResponse;
+import com.adam.book.controllers.dtos.BorrowedBookResponse;
 import com.adam.book.repositories.entities.common.PageResponse;
 import com.adam.book.services.BookService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -49,5 +50,14 @@ public class BookController {
             Authentication connectedUser
             ) {
         return ResponseEntity.ok(bookService.findAllBooksByOwner(page, size, connectedUser));
+    }
+
+    @GetMapping("/borrowed")
+    public ResponseEntity<PageResponse<BorrowedBookResponse>> findAllBorrowedBooks(
+            @RequestParam(name = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) int size,
+            Authentication connectedUser
+            ) {
+        return ResponseEntity.ok(bookService.findAllBorrowedBooks(page, size, connectedUser));
     }
 }
