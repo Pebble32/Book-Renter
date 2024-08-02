@@ -42,6 +42,9 @@ public class UserEntity implements UserDetails, Principal {
     @OneToMany(mappedBy = "owner")
     private List<BookEntity> books;
 
+    @OneToMany(mappedBy = "user")
+    private List<BookTransactionHistoryEntity> history;
+
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private LocalDate createdDate;
