@@ -105,8 +105,12 @@ public class AuthenticationService {
         );
         var claims = new HashMap<String, Object>();
         var user = ((UserEntity) auth.getPrincipal());
+        System.out.println(user.getUsername());
         claims.put("fullName", user.getFullName());
-        var jwtToken = jwtService.generateJwtToken(claims, user);
+
+        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+        var jwtToken = jwtService.generateToken(claims, user);
+        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
