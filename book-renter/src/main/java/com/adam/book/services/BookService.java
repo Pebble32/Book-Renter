@@ -10,6 +10,7 @@ import com.adam.book.repositories.entities.BookTransactionHistoryEntity;
 import com.adam.book.repositories.entities.UserEntity;
 import com.adam.book.repositories.entities.common.PageResponse;
 import com.adam.book.services.converters.BookConverter;
+import com.adam.book.services.handlers.OperationNotPermittedException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.adam.book.controllers.dtos.BookSpecification.withOwnerId;
 
@@ -114,5 +116,17 @@ public class BookService {
                 allBorrowedBooks.isFirst(),
                 allBorrowedBooks.isLast()
         );
+    }
+
+    public Long updateShareableStatus(long bookId, Authentication connectedUser) {
+        BookEntity bookEntity = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("Book not found with ID:: " + bookId));
+        UserEntity userEntity = ((UserEntity) connectedUser.getPrincipal());
+        if (!Objects.equals(bookEntity.getOwner().getId(), userEntity.getId())) {
+            throw new OperationNotPermittedException("Only owner can update shareable status");
+        }
+        bookEntity.setSharable(!bookEntity.isSharable());
+        bookRepository.save(bookEntity);
+        return bookId;
     }
 }
