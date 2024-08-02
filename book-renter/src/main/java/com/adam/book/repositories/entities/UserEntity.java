@@ -39,6 +39,9 @@ public class UserEntity implements UserDetails, Principal {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<RoleEntity> roles;
 
+    @OneToMany(mappedBy = "owner")
+    private List<BookEntity> books;
+
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private LocalDate createdDate;
