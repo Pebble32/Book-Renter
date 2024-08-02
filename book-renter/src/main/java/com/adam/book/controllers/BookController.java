@@ -5,12 +5,14 @@ import com.adam.book.controllers.dtos.BookResponse;
 import com.adam.book.controllers.dtos.BorrowedBookResponse;
 import com.adam.book.repositories.entities.common.PageResponse;
 import com.adam.book.services.BookService;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("books")
@@ -80,13 +82,13 @@ public class BookController {
 
     @PatchMapping("/archived/{book-id}")
     public ResponseEntity<Long> updateArchivedStatus(
-            @PathVariable("book-d") Long bookId,
+            @PathVariable("book-id") Long bookId,
             Authentication connectedUser
     ) {
         return ResponseEntity.ok(bookService.updateArchivedStatus(bookId,connectedUser));
     }
 
-    @PostMapping("/borrow/book-id")
+    @PostMapping("/borrow/{book-id}")
     public ResponseEntity<Long> borrowBook(
             @PathVariable("book-id") Long bookId,
             Authentication connectedUser
@@ -108,5 +110,16 @@ public class BookController {
             Authentication connectedUser
     ) {
         return ResponseEntity.ok(bookService.returnApprovedBorrowedBook(bookId, connectedUser));
+    }
+
+    @PostMapping(value = "/cover/{book-id}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadBookCover(
+            @PathVariable("book-id") Long bookId,
+            @Parameter()
+            @RequestParam("file") MultipartFile file,
+            Authentication connectedUser
+    ) {
+        bookService.uploadBookCover(file, connectedUser, bookId);
+        return ResponseEntity.accepted().build();
     }
 }

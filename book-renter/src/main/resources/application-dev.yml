@@ -32,6 +32,9 @@ application:
     jwt:
       secret-key: ZW5naW5lZXJleHBsYWluYWRkaXRpb25mb290dW5pdmVyc2VkaXZpc2lvbmZvb3RnZW4=
       expiration: 8640000 # a day
-    mailing:
-      frontend:
-        activation-url: http://localhost:4200/activate-account
+  mailing:
+    frontend:
+      activation-url: http://localhost:4200/activate-account
+  file:
+    upload:
+      photos-output-path: ./uploads

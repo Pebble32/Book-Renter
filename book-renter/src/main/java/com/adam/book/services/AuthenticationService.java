@@ -35,7 +35,7 @@ public class AuthenticationService {
     private final static int CODE_LENGTH = 6;
     private final AuthenticationManager authenticationManager;
 
-    @Value("${application.security.mailing.frontend.activation-url}")
+    @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
 
     public void register(RegistrationRequest request) throws MessagingException {

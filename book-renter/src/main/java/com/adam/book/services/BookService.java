@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,6 +33,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final BookConverter bookConverter;
     private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
+    private final FileStorageService fileStorageService;
 
     public Long save(BookRequest bookRequest, Authentication connectedUser) {
         UserEntity userEntity = ((UserEntity) connectedUser.getPrincipal());
@@ -197,5 +199,14 @@ public class BookService {
                 .orElseThrow(() -> new OperationNotPermittedException("Can not approved return on not returned book"));
         bookTransactionHistoryEntity.setReturnApproved(true);
         return bookTransactionHistoryRepository.save(bookTransactionHistoryEntity).getId();
+    }
+
+    public void uploadBookCover(MultipartFile file, Authentication connectedUser, Long bookId) {
+        BookEntity bookEntity = bookRepository.findById(bookId)
+                .orElseThrow(() -> new EntityNotFoundException("No book found with ID::" + bookId));
+        UserEntity userEntity = ((UserEntity) connectedUser.getPrincipal());
+        var bookCover = fileStorageService.saveFile(file, userEntity.getId());
+        bookEntity.setBookCover(bookCover);
+        bookRepository.save(bookEntity);
     }
 }
