@@ -5,6 +5,7 @@ import com.adam.book.controllers.dtos.BookResponse;
 import com.adam.book.repositories.BookRepository;
 import com.adam.book.repositories.entities.BookEntity;
 import com.adam.book.repositories.entities.UserEntity;
+import com.adam.book.repositories.entities.common.PageResponse;
 import com.adam.book.services.converters.BookConverter;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -29,5 +30,9 @@ public class BookService {
         return bookRepository.findById(bookId)
                 .map(bookConverter::toBookResponse)
                 .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId));
+    }
+
+    public PageResponse<BookResponse> findAllBooks(int page, int size, Authentication connectedUser) {
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-package com.adam.book.repositories.entities;
+package com.adam.book.repositories.entities.common;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

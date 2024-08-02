@@ -1,5 +1,6 @@
 package com.adam.book.repositories.entities;
 
+import com.adam.book.repositories.entities.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

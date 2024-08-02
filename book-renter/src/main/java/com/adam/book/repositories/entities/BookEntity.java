@@ -1,5 +1,6 @@
 package com.adam.book.repositories.entities;
 
+import com.adam.book.repositories.entities.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
