@@ -1,9 +1,6 @@
 package com.adam.book.repositories.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,4 +33,17 @@ public class BookEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "book")
     private List<BookTransactionHistoryEntity> history;
+
+    @Transient
+    public double getRate() {
+        if (feedbacks == null || feedbacks.isEmpty()) {
+            return 0.0;
+        }
+        var rate = this.feedbacks.stream()
+                .mapToDouble(FeedbackEntity::getFeedbackRating)
+                .average()
+                .orElse(0.0);
+        double scale = Math.pow(10,1);
+        return Math.round(rate * scale) / scale;
+    }
 }
