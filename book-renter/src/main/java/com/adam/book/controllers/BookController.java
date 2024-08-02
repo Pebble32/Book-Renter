@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("books")
 @RequiredArgsConstructor
@@ -31,5 +33,10 @@ public class BookController {
             @PathVariable("book-id") Long bookId
     ) {
         return ResponseEntity.ok(bookService.findById(bookId));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BookResponse>> findAllBooks() {
+
     }
 }

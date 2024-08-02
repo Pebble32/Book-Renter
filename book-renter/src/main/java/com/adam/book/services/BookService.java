@@ -29,6 +29,5 @@ public class BookService {
         return bookRepository.findById(bookId)
                 .map(bookConverter::toBookResponse)
                 .orElseThrow(() -> new EntityNotFoundException("No book found with ID:: " + bookId));
-        return null;
     }
 }

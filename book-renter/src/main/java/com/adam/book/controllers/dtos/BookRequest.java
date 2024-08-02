@@ -4,7 +4,9 @@ package com.adam.book.controllers.dtos;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
+@Builder
 public record BookRequest(
         Long id,
         @NotNull(message = "100")

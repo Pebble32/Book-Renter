@@ -31,6 +31,7 @@ public class BookConverter {
                 .archived(bookEntity.isArchived())
                 .shareable(bookEntity.isSharable())
                 .owner(bookEntity.getOwner().getFullName())
+                // todo implement cover upload
                 //.cover()
                 .build();
     }
