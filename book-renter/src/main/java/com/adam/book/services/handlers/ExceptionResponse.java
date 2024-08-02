@@ -1,4 +1,4 @@
-package com.adam.book.configurations.handler;
+package com.adam.book.services.handlers;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

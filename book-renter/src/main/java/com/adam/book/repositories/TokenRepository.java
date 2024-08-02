@@ -1,6 +1,6 @@
 package com.adam.book.repositories;
 
-import com.adam.book.entities.TokenEntity;
+import com.adam.book.repositories.entities.TokenEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

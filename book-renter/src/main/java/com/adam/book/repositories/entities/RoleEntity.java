@@ -1,4 +1,4 @@
-package com.adam.book.entities;
+package com.adam.book.repositories.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package com.adam.book.configurations.handler;
+package com.adam.book.services.handlers;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

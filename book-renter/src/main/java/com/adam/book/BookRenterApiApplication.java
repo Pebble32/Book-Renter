@@ -1,6 +1,6 @@
 package com.adam.book;
 
-import com.adam.book.entities.RoleEntity;
+import com.adam.book.repositories.entities.RoleEntity;
 import com.adam.book.repositories.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
