@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -16,14 +17,10 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class BookEntity {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class BookEntity extends BaseEntity {
     private String title;
     private String author;
     private String isbn;
@@ -31,22 +28,4 @@ public class BookEntity {
     private String bookCover;
     private boolean archived;
     private boolean sharable;
-
-
-
-    /*
-    Information About Entity changes and creation
-     */
-    @CreatedDate
-    @Column(updatable = false, nullable = false)
-    private LocalDateTime creationDate;
-    @LastModifiedDate
-    @Column(insertable = false)
-    private LocalDateTime modificationDate;
-    @CreatedBy
-    @Column(updatable = false, nullable = false)
-    private Long createdBy;
-    @LastModifiedBy
-    @Column(insertable = false)
-    private Long modifiedBy;
 }

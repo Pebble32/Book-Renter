@@ -18,11 +18,27 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @SuperBuilder
-@NoArgsConstructor
 @AllArgsConstructor
-public class FeedbackEntity extends BaseEntity {
+@NoArgsConstructor
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public class BaseEntity {
 
-    private Double feedbackRating;
 
-    private String comment;
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @CreatedDate
+    @Column(updatable = false, nullable = false)
+    private LocalDateTime creationDate;
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime modificationDate;
+    @CreatedBy
+    @Column(updatable = false, nullable = false)
+    private Long createdBy;
+    @LastModifiedBy
+    @Column(insertable = false)
+    private Long modifiedBy;
 }
