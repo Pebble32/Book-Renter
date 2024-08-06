@@ -2,11 +2,7 @@ package com.adam.book.controllers.dtos;
 
 import jakarta.validation.constraints.*;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 @Builder
 public record FeedbackRequest (
 
