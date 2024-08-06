@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export interface BorrowedBookResponse {
-  author?: string;
+  authorName?: string;
   id?: number;
   isbn?: string;
   rate?: number;

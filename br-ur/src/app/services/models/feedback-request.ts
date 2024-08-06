@@ -3,5 +3,5 @@
 export interface FeedbackRequest {
   bookId: number;
   comment: string;
-  rating?: number;
+  note?: number;
 }

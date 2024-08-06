@@ -2,8 +2,8 @@
 /* eslint-disable */
 export interface BookResponse {
   archived?: boolean;
-  author?: string;
-  cover?: string;
+  authorName?: string;
+  cover?: Array<string>;
   id?: number;
   isbn?: string;
   owner?: string;

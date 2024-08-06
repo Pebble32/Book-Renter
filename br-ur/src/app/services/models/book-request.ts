@@ -5,6 +5,6 @@ export interface BookRequest {
   id?: number;
   isbn: string;
   shareable?: boolean;
-  synopsis?: string;
+  synopsis: string;
   title: string;
 }

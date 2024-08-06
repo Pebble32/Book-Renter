@@ -7,7 +7,6 @@ import {HttpResponse} from "@angular/common/http";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 

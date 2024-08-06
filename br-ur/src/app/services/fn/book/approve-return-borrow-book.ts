@@ -6,16 +6,15 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { BookRequest } from '../../models/book-request';
 
-export interface SaveBook$Params {
-      body: BookRequest
+export interface ApproveReturnBorrowBook$Params {
+  'book-id': number;
 }
 
-export function saveBook(http: HttpClient, rootUrl: string, params: SaveBook$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
-  const rb = new RequestBuilder(rootUrl, saveBook.PATH, 'post');
+export function approveReturnBorrowBook(http: HttpClient, rootUrl: string, params: ApproveReturnBorrowBook$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+  const rb = new RequestBuilder(rootUrl, approveReturnBorrowBook.PATH, 'patch');
   if (params) {
-    rb.body(params.body, 'application/json');
+    rb.path('book-id', params['book-id'], {});
   }
 
   return http.request(
@@ -28,4 +27,4 @@ export function saveBook(http: HttpClient, rootUrl: string, params: SaveBook$Par
   );
 }
 
-saveBook.PATH = '/books';
+approveReturnBorrowBook.PATH = '/books/borrow/return/approve/{book-id}';
