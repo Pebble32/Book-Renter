@@ -24,17 +24,23 @@ export class LoginComponent {
   login() {
     this.errorMessage = [];
     this.authenticationService.authenticate({
-      body: this.authRequest,
+      body: this.authRequest
     }).subscribe({
       next: (res) => {
-        // todo save token
+        // todo implement save token
         this.router.navigate(['books']);
       },
       error: (err) => {
         console.log(err);
+        if (err.error.validationErrors) {
+          this.errorMessage = err.error.validationErrors;
+        } else {
+          this.errorMessage.push(err.error.errorMsg);
+        }
       }
-    })
+    });
   }
+
 
   toRegistration() {
     this.router.navigate(['register']);
