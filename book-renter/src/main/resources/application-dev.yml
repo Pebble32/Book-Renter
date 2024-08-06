@@ -9,8 +9,9 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   mail:
     host: mail-dev-book
     port: 1025
@@ -26,12 +27,13 @@ spring:
         connectiontimeout: 5000
         timeout: 3000
         writetimeout: 5000
-
 application:
   security:
     jwt:
       secret-key: ZW5naW5lZXJleHBsYWluYWRkaXRpb25mb290dW5pdmVyc2VkaXZpc2lvbmZvb3RnZW4=
       expiration: 8640000 # a day
+      refresh-token:
+        expiration: 604800000 # a week
   mailing:
     frontend:
       activation-url: http://localhost:4200/activate-account
