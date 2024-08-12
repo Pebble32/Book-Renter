@@ -123,3 +123,7 @@ Steps will be added later on.
 * **Deploy on AWS ECS**: Complete deployment on AWS using ECS and add steps to the README file
 * **Implement Frontend Dockerfile**: Create a Dockerfile for the Angular frontend and integrate it into Docker Compose.
 * **Add Screenshots**: Add Screenshots of main page components
+
+
+## License
+This project is licensed under the MIT License. See the `LICENSE` file for details.
