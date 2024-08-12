@@ -26,7 +26,7 @@ services:
       - spring-demo
 
 networks:
-  spring-demo:
+  book-renter-net:
     driver: bridge
 
 volumes:
