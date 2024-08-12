@@ -45,7 +45,7 @@ BookRenter/
 ### Installation and Setup
 1. **Clone the repository**:
 ```bash
-git clone https://github.com/yourusername/book-renter.git
+git clone https://github.com/Pebble32/Book-Renter.git
 cd book-renter
 ```
 2. **Set up the Database nad MailDev**:
