@@ -14,9 +14,9 @@ public class ApplicationAuditAware implements AuditorAware<Long> {
     @Override
     public Optional<Long> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null ||
+        if (authentication == null ||
                 !authentication.isAuthenticated() ||
-                    !(authentication instanceof AnonymousAuthenticationToken)) {
+                authentication instanceof AnonymousAuthenticationToken) {
             return Optional.empty();
         }
         UserEntity userPrincipal = (UserEntity) authentication.getPrincipal();
