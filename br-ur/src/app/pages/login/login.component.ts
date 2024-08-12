@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {AuthenticationRequest} from "../../services/models/authentication-request";
 import {AuthenticationService} from "../../services/services/authentication.service";
+import {TokenService} from "../../services/token/token.service";
 import {Router} from "@angular/router";
-import {HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-login',
@@ -16,8 +16,9 @@ export class LoginComponent {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
-    // todo impl service
+    private tokenService: TokenService,
   ) {
+
   }
 
   login() {
@@ -26,7 +27,7 @@ export class LoginComponent {
       body: this.authRequest
     }).subscribe({
       next: (res) => {
-        // todo implement save token
+        this.tokenService.token = res.token as string;
         this.router.navigate(['books']);
       },
       error: (err) => {
