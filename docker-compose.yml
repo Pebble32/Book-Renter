@@ -11,7 +11,7 @@ services:
       - postgres:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "5432:5432"
+      - "5434:5432"
     networks:
       - spring-demo
     restart: unless-stopped
@@ -24,29 +24,6 @@ services:
       - "1025:1025"
     networks:
       - spring-demo
-
-  spring-boot-app:
-    container_name: book-renter-app
-    build:
-      context: ./book-renter
-      dockerfile: Dockerfile
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-sql-book:5432/book_db
-      SPRING_DATASOURCE_USERNAME: username
-      SPRING_DATASOURCE_PASSWORD: mysecretpassword
-      SPRING_MAIL_HOST: mail-dev-book
-      SPRING_MAIL_PORT: 1025
-      SPRING_MAIL_USERNAME: adam
-      SPRING_MAIL_PASSWORD: mysecretpassword
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update # This line ensures your tables are created automatically
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
-      - mail-dev
-    networks:
-      - spring-demo
-    restart: unless-stopped
 
 networks:
   spring-demo:
