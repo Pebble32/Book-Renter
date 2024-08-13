@@ -108,9 +108,7 @@ public class AuthenticationService {
         System.out.println(user.getUsername());
         claims.put("fullName", user.getFullName());
 
-        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
         var jwtToken = jwtService.generateToken(claims, user);
-        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -126,7 +124,8 @@ public class AuthenticationService {
             sendValidationEmail(savedToken.getUser());
             throw new RuntimeException("Activation code has expired. New token has been sent to your email address");
         }
-        var user = userRepository.findById(savedToken.getId())
+        System.out.println(savedToken.getUser().getId());
+        var user = userRepository.findById(savedToken.getUser().getId())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
         user.setEnabled(true);

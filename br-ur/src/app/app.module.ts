@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import {FormsModule} from "@angular/forms";
 import { RegisterComponent } from './pages/register/register.component';
 import { ActivateAccountComponent } from './pages/activate-account/activate-account.component';
+import {CodeInputModule} from "angular-code-input";
 
 @NgModule({
   declarations: [
@@ -16,11 +17,12 @@ import { ActivateAccountComponent } from './pages/activate-account/activate-acco
     RegisterComponent,
     ActivateAccountComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        CodeInputModule,
+    ],
   providers: [
     provideClientHydration(),
     provideHttpClient(withInterceptorsFromDi())

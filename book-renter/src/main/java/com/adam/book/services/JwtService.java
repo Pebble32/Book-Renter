@@ -49,14 +49,12 @@ public class JwtService {
             UserDetails userDetails,
             long expiration
     ) {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAA");
         var authorities = userDetails.getAuthorities()
                 .stream().
                 map(GrantedAuthority::getAuthority)
                 .toList();
 
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAA");
-        var test = Jwts
+        return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
@@ -65,9 +63,6 @@ public class JwtService {
                 .claim("authorities", authorities)
                 .signWith(getSignInKey())
                 .compact();
-
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAA");
-        return test;
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
