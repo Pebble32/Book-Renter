@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BookResponse} from "../../../../services/models/book-response";
 
 @Component({
@@ -9,14 +9,8 @@ import {BookResponse} from "../../../../services/models/book-response";
 export class BookCardComponent {
 
   private _book: BookResponse = {};
+  private _manage: boolean = false;
   private _bookCover: string | undefined;
-
-  get bookCover(): string | undefined {
-    if(this._book.cover) {
-      return '';
-    }
-    return this._bookCover;
-  }
 
   get book(): BookResponse {
     return this._book;
@@ -27,4 +21,51 @@ export class BookCardComponent {
     this._book = value;
   }
 
+
+  get bookCover(): string | undefined {
+    if (this._book.cover) {
+      return 'data:image/jpg;base64,' + this._book.cover;
+    }
+    return 'https://source.unsplash.com/user/c_v_r/1900x800';
+  }
+
+  @Input()
+  get manage(): boolean {
+    return this._manage;
+  }
+
+  set manage(value: boolean) {
+    this._manage = value;
+  }
+
+  @Output() private share: EventEmitter<BookResponse> = new EventEmitter();
+  @Output() private archive: EventEmitter<BookResponse> = new EventEmitter();
+  @Output() private addToWaitingList: EventEmitter<BookResponse> = new EventEmitter();
+  @Output() private borrow: EventEmitter<BookResponse> = new EventEmitter();
+  @Output() private edit: EventEmitter<BookResponse> = new EventEmitter();
+  @Output() private details: EventEmitter<BookResponse> = new EventEmitter();
+
+  onShowDetails() {
+    this.details.emit(this._book);
+  }
+
+  onBorrow() {
+    this.borrow.emit(this._book);
+  }
+
+  onAddToWaitingList() {
+    this.addToWaitingList.emit(this._book);
+  }
+
+  onEdit() {
+    this.edit.emit(this._book);
+  }
+
+  onShare() {
+    this.share.emit(this._book);
+  }
+
+  onArchive() {
+    this.archive.emit(this._book);
+  }
 }
